@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html>
-    {{- partial "head.html" . -}}
-    <body>
-        {{- partial "header.html" . -}}
-        <div id="content">
-        {{- block "main" . }}{{- end }}
+<html lang="{{ $.Site.LanguageCode}}" class="h-full">
+    <head>
+        {{ partial "header.html" . }}
+        <title>{{ block "title" . }}{{ .Title }}{{ end }}</title>
+        {{ range .AlternativeOutputFormats -}}
+            {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+        {{ end -}}
+    </head>
+    <body class="bg-gray-900 text-gray-400 flex flex-col h-full">
+        <div class="flex-1 mx-auto w-full">
+            {{ partial "navbar.html" . }}
+            {{ if isset .Params "header_image" }} {{ .Scratch.Set "image" .Params.header_image }} {{ else if $.Site.Params.mainbg }}{{ .Scratch.Set "image" $.Site.Params.mainbg }}{{ else }}{{ .Scratch.Set "image" "https://picsum.photos/1920/1080"}}{{ end }}
+            {{ partial "main-bg.html" . }}
+            <main id="content" class="container flex-1 mx-auto">
+                {{- block "main" . }}{{- end }}
+
+                {{ if .RSSLink }}
+                <div class="flex flex-row-reverse">
+                    <a class="right-0" href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}">RSS Feed</a>
+                </div>
+                {{ end }}
+            </main>
         </div>
+
         {{- partial "footer.html" . -}}
     </body>
 </html>

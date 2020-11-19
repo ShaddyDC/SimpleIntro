@@ -1,0 +1,18 @@
+{{ define "main" }}
+    <div id="post-index">
+        <h1>Blog posts</h1>
+
+        <ol class="post-list flex flex-col">
+            {{ range .Pages.ByDate.Reverse  }}
+                <li class="flex-1 border-solid text-xl">
+                    <a href="{{ .Permalink }}">{{ .Title }}</a> - <time>{{ .Date.Format "Mon, Jan 2, 2006" }}</time>
+                    {{ .Render "summary" }}
+                </li>
+            {{ end }}
+        </ol>
+
+        {{ with .OutputFormats.Get "rss" -}}
+            {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+        {{ end -}}
+    </div>
+{{end}}
