@@ -9,7 +9,7 @@
     </head>
     <body class="bg-gray-900 text-gray-400 flex flex-col h-full">
         <div class="flex-1 mx-auto w-full">
-            {{ partial "navbar.html" . }}
+            {{ partial "blog-navbar.html" . }}
             {{ if isset .Params "header_image" }} {{ .Scratch.Set "image" .Params.header_image }} {{ else if $.Site.Params.mainbg }}{{ .Scratch.Set "image" $.Site.Params.mainbg }}{{ else }}{{ .Scratch.Set "image" "https://picsum.photos/1920/1080"}}{{ end }}
             {{ partial "main-bg.html" . }}
             <main id="content" class="container flex-1 mx-auto">
