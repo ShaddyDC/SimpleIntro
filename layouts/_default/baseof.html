@@ -15,9 +15,9 @@
             <main id="content" class="container flex-1 mx-auto">
                 {{- block "main" . }}{{- end }}
 
-                {{ if .RSSLink }}
+                {{ with .OutputFormats.Get "RSS" }}
                 <div class="flex flex-row-reverse">
-                    <a class="right-0" href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}">RSS Feed</a>
+                    <a class="right-0" href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}">RSS Feed</a>
                 </div>
                 {{ end }}
             </main>
